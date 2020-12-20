@@ -9,7 +9,7 @@ function __fzf_search_ghq --description "Search the list of locally cloned repos
     set --local --export SHELL (command --search fish)
     set repository_paths_selected (
         ghq list --full-path 2>/dev/null |
-        fzf --multi --preview='__fzf_preview_repository {}'
+        fzf --multi --preview='__fzf_preview_git_repository {} readme'
     )
 
     if test $status -eq 0
