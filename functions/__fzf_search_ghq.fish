@@ -1,6 +1,6 @@
 function __fzf_search_ghq --description "Search the list of locally cloned repositories managed by ghq(1). Insert the full path of the selected repository into the commandline at the cursor."
     if not type -q ghq
-        echo '__fzf_search_ghq: Unable to find ghq(1) in the system' >&2
+        echo '__fzf_search_ghq: Unable to find ghq(1) on the system' >&2
         return 1
     end
 
