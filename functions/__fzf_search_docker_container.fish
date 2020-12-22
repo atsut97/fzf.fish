@@ -11,7 +11,7 @@ function __fzf_search_docker_container --description "Search the docker containe
     # Limit fields to search with the option '--nth' below.
     set selected_container_line (
         docker ps --all |
-        fzf --no-multi --header-lines=1 --nth='1..3,7,-2,-1' --preview='docker container logs {1}'
+        fzf --no-multi --tiebreak='begin,index' --header-lines=1 --nth='1..3,7,-2,-1' --preview='docker container logs {1}'
     )
 
     if test $status -eq 0
