@@ -17,7 +17,7 @@ function __fzf_search_docker_container --description "Search the docker containe
     if test $status -eq 0
         set abbrev_container_id (string split --max 1 " " $selected_container_line)[1]
         set container_id (docker container inspect --format='{{.Id}}' $abbrev_container_id)
-        commandline --insert $container_id
+        commandline --insert "$container_id "
     end
 
     commandline --function repaint
