@@ -8,7 +8,8 @@ function __fzf_search_docker_container --description "Search the docker containe
     # See similar comment in __fzf_search_shell_variables.fish.
     set --local --export SHELL (command --search fish)
 
-    # Limit fields to search with the option '--nth' below.
+    # Narrow fields to search down to ID, Image, Command, Status,
+    # Ports and Names by providing '--nth' option.
     set selected_container_line (
         docker ps --all |
         fzf --no-multi --tiebreak='begin,index' --header-lines=1 --nth='1..3,7,-2,-1' --preview-window=hidden --preview='docker container logs {1}'
