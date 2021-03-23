@@ -10,13 +10,14 @@ function __fzf_search_git_tag --description "Search the git tag of the current g
 
     set selected_tags (
         git tag --sort -v:refname |
-        fzf --multi --preview-window='right:70%' --preview='__fzf_preview_git_repository (pwd) show {}'
+        fzf --ansi --multi \
+            --preview-window='right:70%' \
+            --preview='__fzf_preview_git_repository (pwd) show {}' \
+            --query=(commandline --current-token)
     )
 
     if test $status -eq 0
-        for tag in $selected_tags
-            commandline --insert "$tag "
-        end
+        commandline --current-token --replace -- (string escape -- $selected_tags | string join ' ')
     end
 
     commandline --function repaint

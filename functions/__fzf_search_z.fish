@@ -7,16 +7,16 @@ function __fzf_search_z --description "Search the list of most used directories 
     # Make sure that fzf uses fish to execute __fzf_preview_file.
     # See similar comment in __fzf_search_shell_variables.fish.
     set --local --export SHELL (command --search fish)
+
     set directory_paths_selected (
-        z --list 2>/dev/null | cut -c 12- |
-        fzf --multi --preview='__fzf_preview_file {}'
+        z --list 2>/dev/null | cut -c 12- | \
+        fzf --ansi --multi \
+            --preview='__fzf_preview_file {}' \
+            --query=(commandline --current-token)
     )
 
     if test $status -eq 0
-        for path in $directory_paths_selected
-            set escaped_path (string escape "$path")
-            commandline --insert "$escaped_path "
-        end
+        commandline --current-token --replace -- (string escape -- $directory_paths_selected | string join ' ')
     end
 
     commandline --function repaint

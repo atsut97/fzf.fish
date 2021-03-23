@@ -7,16 +7,16 @@ function __fzf_search_ghq --description "Search the list of locally cloned repos
     # Make sure that fzf uses fish to execute __fzf_preview_file.
     # See similar comment in __fzf_search_shell_variables.fish.
     set --local --export SHELL (command --search fish)
+
     set repository_paths_selected (
-        ghq list --full-path 2>/dev/null |
-        fzf --multi --preview='__fzf_preview_git_repository {} readme'
+        ghq list --full-path 2>/dev/null | \
+        fzf --ansi --multi \
+            --preview='__fzf_preview_git_repository {} readme' \
+            --query=(commandline --current-token)
     )
 
     if test $status -eq 0
-        for path in $repository_paths_selected
-            set escaped_path (string escape "$path")
-            commandline --insert "$escaped_path "
-        end
+        commandline --current-token --replace -- (string escape -- $repository_paths_selected | string join ' ')
     end
 
     commandline --function repaint

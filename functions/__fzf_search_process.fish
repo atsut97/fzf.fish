@@ -14,13 +14,15 @@ function __fzf_search_process --description "Search the current processes and in
     end
 
     set selected_ps_line (
-         command ps $ps_options |
-         fzf --no-multi --tiebreak=index --header-lines=1 --nth=1,6,8..
+         command ps $ps_options | \
+         fzf --no-multi --tiebreak=index \
+             --header-lines=1 --nth=1,6,8.. \
+             --query=(commandline --current-token)
     )
 
     if test $status -eq 0
         set process_id (string split --no-empty " " $selected_ps_line)[2]
-        commandline --insert $process_id
+        commandline --current-token --replace -- $process_id
     end
 
     commandline --function repaint

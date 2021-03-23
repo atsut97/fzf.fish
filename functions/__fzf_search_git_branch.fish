@@ -8,9 +8,12 @@ function __fzf_search_git_branch --description "Search the git branch of the cur
     # See similar comment in __fzf_search_shell_variables.fish.
     set --local --export SHELL (command --search fish)
 
+    set --local preview_cmd '__fzf_preview_git_repository (pwd) log (string split --max 1 " " (string sub --start 3 {}))[1]'
     set selected_branch_line (
-        git branch --all --color=always |
-        fzf --ansi --preview='__fzf_preview_git_repository (pwd) log (string split --max 1 " " (string sub --start 3 {}))[1]'
+        git branch --all --color=always | \
+        fzf --ansi \
+            --preview=$preview_cmd \
+            --query=(commandline --current-token)
     )
 
     if test $status -eq 0
@@ -20,7 +23,7 @@ function __fzf_search_git_branch --description "Search the git branch of the cur
         set branch_name (string split --max 1 " " $branch_line)[1]
         # Trim redundant part.
         set branch_name (string replace 'remotes/' '' $branch_name)
-        commandline --insert $branch_name
+        commandline --current-token --replace -- $branch_name
     end
 
     commandline --function repaint
