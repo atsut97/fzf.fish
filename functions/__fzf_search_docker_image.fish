@@ -26,7 +26,7 @@ function __fzf_search_docker_image --description "Search the docker top-level im
         set fields (string split --no-empty " " $selected_image_line)
         set repository $fields[1]
         set tag $fields[2]
-        commandline --current-token --replace -- "$repository:$tag "
+        commandline --current-token --replace -- $repository:$tag
     end
 
     commandline --function repaint
