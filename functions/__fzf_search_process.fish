@@ -14,7 +14,7 @@ function __fzf_search_process --description "Search the current processes and in
     end
 
     set selected_ps_line (
-         command ps $ps_options | \
+         ps $ps_options | \
          fzf --no-multi --tiebreak=index \
              --header-lines=1 --nth=1,6,8.. \
              --query=(commandline --current-token)
