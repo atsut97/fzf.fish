@@ -14,8 +14,7 @@ mock ghq \* "return 0"
 set --export --append FZF_DEFAULT_OPTS "--filter='repo'"
 set actual (__fzf_search_ghq | string split " ")
 
-string match --regex --quiet "^$path1\$" "$actual[1]"; and \
-    string match --regex --quiet "^$path2\$" "$actual[2]"
+string match --regex --quiet "^$path1\$" "$actual[1]"; and string match --regex --quiet "^$path2\$" "$actual[2]"
 
 @test "correct full paths found in output by ghq" $status -eq 0
 

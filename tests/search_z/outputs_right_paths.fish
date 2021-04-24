@@ -16,7 +16,5 @@ echo '1.25       /home/atsuta/src';
 mock z \* "return 0"
 set --export --append FZF_DEFAULT_OPTS "--filter='emacs'"
 set actual (__fzf_search_z | string split " ")
-string match --regex --quiet "^/home/atsuta/\.emacs\.d\$" $actual[1]; and \
-    string match --regex --quiet "^/home/atsuta/usr/src/emacs\$" $actual[2]; and \
-    string match --regex --quiet "^/home/atsuta/usr/src/emacs-27\.1\$" $actual[3]
+string match --regex --quiet "^/home/atsuta/\.emacs\.d\$" $actual[1]; and string match --regex --quiet "^/home/atsuta/usr/src/emacs\$" $actual[2]; and string match --regex --quiet "^/home/atsuta/usr/src/emacs-27\.1\$" $actual[3]
 @test "correct paths found in z list" $status -eq 0
