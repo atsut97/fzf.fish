@@ -11,12 +11,13 @@ Augment your [Fish][] command line with mnemonic key bindings to efficiently fin
 ## About this repository
 
 This is a (personal) fork of [PatrickF1/fzf.fish](https://github.com/patrickf1/fzf.fish/releases) where the following functions added:
-  * __fzf_search_docker_container.fish
-  * __fzf_search_docker_image.fish
-  * __fzf_search_git_branch.fish
-  * __fzf_search_git_tag.fish
-  * __fzf_search_process.fish
-  * __fzf_search_z.fish
+
+- \_\_fzf_search_docker_container.fish
+- \_\_fzf_search_docker_image.fish
+- \_\_fzf_search_git_branch.fish
+- \_\_fzf_search_git_tag.fish
+- \_\_fzf_search_process.fish
+- \_\_fzf_search_z.fish
 
 ## Features
 
