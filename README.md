@@ -14,6 +14,7 @@ This is a (personal) fork of [PatrickF1/fzf.fish](https://github.com/patrickf1/f
 
 - \_\_fzf_search_docker_container.fish
 - \_\_fzf_search_docker_image.fish
+- \_\_fzf_search_ghq.fish
 - \_\_fzf_search_git_branch.fish
 - \_\_fzf_search_git_tag.fish
 - \_\_fzf_search_process.fish
