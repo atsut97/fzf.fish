@@ -33,7 +33,7 @@ Use `fzf.fish` to interactively find and insert into the command line:
 - **Preview window:** file with syntax highlighting, directory contents, or file type
 - **Remarks**
   - prepends `./` to the selection if only one selection is made and it becomes the only token on the command line, making it easy to execute if an executable, or cd into if a directory (see [cd docs][])
-  - if the current token is a directory with a trailing slash (e.g. `functions/<CURSOR>`), then search will be scoped to that directory
+  - if the current token is a directory with a trailing slash (e.g. `.config/<CURSOR>`), then that directory will be searched instead
   - ignores files that are also ignored by git
   - <kbd>Tab</kbd> to multi-select
 
@@ -106,7 +106,7 @@ set --universal fzf_fish_custom_keybindings
 
 Do not try to set `fzf_fish_custom_keybindings` in your `config.fish` because the key binding configuration is sourced first on shell startup and so will not see it.
 
-Next, set your own key bindings by following [conf.d/fzf.fish][] as an example.
+Next, set your own key bindings by following [conf.d/fzf.fish][] as an example. Your search variables key binding should reference the `fzf_search_vars_cmd` variable instead of hardcoding the command.
 
 ### Pass fzf options to all commands
 
@@ -142,15 +142,25 @@ They are always appended last to fzf's argument list. Because fzf uses the optio
 - [re-populate fzf's input list on demand](https://github.com/junegunn/fzf/issues/1750)
 - change the search mode
 
-### Change the command used to preview folders
+### Change the command used to preview files
 
-The search directory feature, by default, uses `ls` to preview the contents of a directory. To integrate with the variety of `ls` replacements available, the command used to preview directories is configurable through the `fzf_preview_dir_cmd` variable. For example, in your `config.fish`, you may put:
+The search directory feature, by default, uses `bat` to preview the contents of files. `bat` is a well-adopted `cat` replacement with syntax highlighting, line numbers, and more. If you would like to change the preview tool (to `cat` to avoid installing a new dependency, or to add custom logic such as binary or image preview), you may set the `fzf_preview_file_cmd` variable. For example, in your `config.fish`, you may put:
+
+```fish
+set fzf_preview_file_cmd cat
+```
+
+Do not specify a target path in the command, as `fzf.fish` will [prepend the file][custom preview command] to preview to the command itself.
+
+### Change the command used to preview directories
+
+The search directory feature, by default, uses `ls` to preview the contents of directories. To integrate with the variety of `ls` replacements available (e.g. exa, lsd, tree), the command used to preview directories is configurable through the `fzf_preview_dir_cmd` variable. Set `fzf_preview_dir_cmd` in your `config.fish`:
 
 ```fish
 set fzf_preview_dir_cmd exa --all --color=always
 ```
 
-Do not specify a target path in the command, as `fzf.fish` will [prepend the directory][custom preview command] to preview to the command itself.
+As above, do not specify a target path in the command, as `fzf.fish` will [prepend the directory][custom preview command] to preview to the command itself.
 
 ### Change the files searched
 
@@ -162,45 +172,42 @@ set fzf_fd_opts --hidden --exclude=.git
 
 ### Change the key binding for a single command
 
-See the [FAQ][] Wiki page.
+See the [Cookbook][] Wiki page.
 
-## Prior art
+## Further reading
 
-If `fzf.fish` is a useful plugin, it is by standing on the shoulder of giants. There are two other fzf integrations for Fish worth regarding: [jethrokuan/fzf][] and fzf's out-of-the-box [Fish extension][]. The [Prior Art][] Wiki page explains how `fzf.fish` compares to and improves on them.
+Find answers to these questions and more in the [project Wiki][wiki]:
 
-## Troubleshooting & FAQ
-
-Need help? These Wiki pages can guide you:
-
-- [Troubleshooting][troubleshooting]
-- [FAQ][faq]
+- How does `fzf.fish` [compare][prior art] to other popular fzf plugins for fish?
+- Why isn't this [feature working][troubleshooting] for me?
+- How can I [integrate][cookbook] this plugin into my workflow?
+- How can I [contribute][] to this plugin?
 
 [actions]: https://github.com/PatrickF1/fzf.fish/actions
 [awesome badge]: https://awesome.re/mentioned-badge.svg
 [awesome fish]: https://git.io/awsm.fish
 [bat]: https://github.com/sharkdp/bat
 [build status badge]: https://img.shields.io/github/workflow/status/patrickf1/fzf.fish/CI
-[custom preview command]: functions/__fzf_preview_file.fish#L7
 [cd docs]: https://fishshell.com/docs/current/cmds/cd.html
 [command history search]: images/command_history.gif
 [conf.d/fzf.fish]: conf.d/fzf.fish
-[faq]: https://github.com/PatrickF1/fzf.fish/wiki/FAQ
+[contribute]: https://github.com/PatrickF1/fzf.fish/wiki/Contributing
+[cookbook]: https://github.com/PatrickF1/fzf.fish/wiki/Cookbook
+[custom preview command]: functions/__fzf_preview_file.fish#L7
 [fd]: https://github.com/sharkdp/fd
 [file search]: images/directory.gif
 [fish]: https://fishshell.com
 [fisher]: https://github.com/jorgebucaran/fisher
-[fish extension]: https://github.com/junegunn/fzf/blob/master/shell/key-bindings.fish
 [fzf_default_opts]: https://github.com/junegunn/fzf#environment-variables
 [fzf]: https://github.com/junegunn/fzf
 [git log search]: images/git_log.gif
 [git status select]: images/git_status.gif
 [ilancosman/tide]: https://github.com/IlanCosman/tide
-[jethrokuan/fzf]: https://github.com/jethrokuan/fzf
 [latest release badge]: https://img.shields.io/github/v/release/patrickf1/fzf.fish
 [prior art]: https://github.com/PatrickF1/fzf.fish/wiki/Prior-Art
 [releases]: https://github.com/patrickf1/fzf.fish/releases
 [shell variables search]: images/shell_variables.gif
 [troubleshooting]: https://github.com/PatrickF1/fzf.fish/wiki/Troubleshooting
 [universal variable]: https://fishshell.com/docs/current/#more-on-universal-variables
-[unix philosophy]: https://en.wikipedia.org/wiki/Unix_philosophy
 [var scope]: https://fishshell.com/docs/current/#variable-scope
+[wiki]: https://github.com/PatrickF1/fzf.fish/wiki
