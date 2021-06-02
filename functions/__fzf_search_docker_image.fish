@@ -23,10 +23,14 @@ function __fzf_search_docker_image --description "Search the docker top-level im
     )
 
     if test $status -eq 0
-        set fields (string split --no-empty " " $selected_image_line)
-        set repository $fields[1]
-        set tag $fields[2]
-        commandline --current-token --replace -- $repository:$tag
+        set abbrev_container_id (string split --no-empty " " $selected_image_line)[3]
+        if set --query fzf_docker_use_full_id
+            set container_id (docker container inspect --format='{{.Id}}' $abbrev_container_id)
+        else
+            set container_id $abbrev_container_id
+        end
+
+        commandline --current-token --replace -- $container_id
     end
 
     commandline --function repaint
