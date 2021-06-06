@@ -13,9 +13,9 @@ function __fzf_search_docker_container --description "Search the docker containe
 
     # Narrow fields to search down to ID, Image, Command, Status,
     # Ports and Names by providing '--nth' option.
-    set selected_container_line (
+    set selected_container_lines (
         docker ps --all | \
-        fzf --ansi --no-multi --tiebreak='begin,index' \
+        fzf --ansi --multi --tiebreak='begin,index' \
             --header-lines=1 --nth='1..3,7,-2,-1' \
             --preview-window=hidden \
             --preview='docker container logs {1}' \
@@ -23,14 +23,18 @@ function __fzf_search_docker_container --description "Search the docker containe
     )
 
     if test $status -eq 0
-        set abbrev_container_id (string split --max 1 " " $selected_container_line)[1]
-        if set --query fzf_docker_use_full_id
-            set container_id (docker container inspect --format='{{.Id}}' $abbrev_container_id)
-        else
-            set container_id $abbrev_container_id
+        set container_ids
+
+        for line in $selected_container_lines
+            set abbrev_container_id (string split --max 1 " " $line)[1]
+            if set --query fzf_docker_use_full_id
+                set --append container_ids (docker container inspect --format='{{.Id}}' $abbrev_container_id)
+            else
+                set --append container_ids $abbrev_container_id
+            end
         end
 
-        commandline --current-token --replace -- $container_id
+        commandline --current-token --replace -- (string escape -- $container_ids | string join ' ')
     end
 
     commandline --function repaint
