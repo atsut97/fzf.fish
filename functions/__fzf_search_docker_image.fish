@@ -3,7 +3,7 @@ function __fzf_search_docker_image --description "Search the docker top-level im
         echo '__fzf_search_docker_image: Unable to find docker(1) on the system' >&2
         return 1
     else if not docker stats --no-stream >/dev/null 2>&1
-        echo '__fzf_search_docker_container: Cannot connect to the Docker daemon' >&2
+        echo '__fzf_search_docker_image: Cannot connect to the Docker daemon' >&2
         return 1
     end
 
