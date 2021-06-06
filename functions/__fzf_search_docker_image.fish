@@ -13,9 +13,9 @@ function __fzf_search_docker_image --description "Search the docker top-level im
 
     # Narrow fields to search down to Repository, Tag and Image ID by
     # providing '--nth' option.
-    set selected_image_line (
+    set selected_image_lines (
         docker images | \
-        fzf --ansi --no-multi --tiebreak='begin,index' \
+        fzf --ansi --multi --tiebreak='begin,index' \
             --header-lines=1 --nth='1..3' \
             --preview-window=hidden \
             --preview='docker image history {3}' \
@@ -23,14 +23,18 @@ function __fzf_search_docker_image --description "Search the docker top-level im
     )
 
     if test $status -eq 0
-        set abbrev_container_id (string split --no-empty " " $selected_image_line)[3]
-        if set --query fzf_docker_use_full_id
-            set container_id (docker container inspect --format='{{.Id}}' $abbrev_container_id)
-        else
-            set container_id $abbrev_container_id
+        set image_ids
+
+        for line in $selected_image_lines
+            set abbrev_image_id (string split --no-empty " " $line)[3]
+            if set --query fzf_docker_use_full_id
+                set --append image_ids (docker image inspect --format='{{.Id}}' $abbrev_image_id)
+            else
+                set --append image_ids $abbrev_image_id
+            end
         end
 
-        commandline --current-token --replace -- $container_id
+        commandline --current-token --replace -- (string escape -- $image_ids | string join ' ')
     end
 
     commandline --function repaint
