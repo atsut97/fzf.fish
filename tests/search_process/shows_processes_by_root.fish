@@ -10,5 +10,5 @@ echo 'atsuta   12955  6832  0 19:01 pts/2    00:00:00 ps -f -u 1000';
 "
 set --export --append FZF_DEFAULT_OPTS "--filter='root'"
 set expected 1
-set actual (__fzf_search_process)
+set actual (_fzf_search_process)
 @test "shows all the processes owned by root as well" "$actual" = "$expected"

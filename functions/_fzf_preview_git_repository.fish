@@ -1,12 +1,12 @@
-# Helper function for __fzf_search_git_branch and others
-function __fzf_preview_git_repository --argument-names repository_path preview_type object --description "Prints a preview for the given repository based on the given preview type which is chosen from readme, show, log."
+# Helper function for _fzf_search_git_branch and others
+function _fzf_preview_git_repository --argument-names repository_path preview_type object --description "Prints a preview for the given repository based on the given preview type which is chosen from readme, show, log."
     if test -z "$repository_path"
-        echo '__fzf_preview_git_repository: Requires one argument at least' >&2
+        echo '_fzf_preview_git_repository: Requires one argument at least' >&2
         return 1
     end
 
     if not test -d "$repository_path"
-        echo "__fzf_preview_git_repository: $repository_path is not a directory" >&2
+        echo "_fzf_preview_git_repository: $repository_path is not a directory" >&2
         return 1
     end
 
@@ -44,7 +44,7 @@ function __fzf_preview_git_repository --argument-names repository_path preview_t
         # Show the commit logs.
         git log --color=always --graph --format=format:'%C(auto)%as %h%d %s' $object --
     else
-        echo "__fzf_preview_git_repository: Unknown preview type: $preview_type" >&2
+        echo "_fzf_preview_git_repository: Unknown preview type: $preview_type" >&2
         return 1
     end
 

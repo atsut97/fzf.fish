@@ -11,7 +11,7 @@ echo 'hello-world   linux    d1165f221234   3 months ago   13.3kB';
 mock docker \* "return 0"
 set --export --append FZF_DEFAULT_OPTS "--filter='ubuntu'"
 set expected 9ff95a467e45 81bcf752ac3d 7e0aa2d69a15
-set actual (__fzf_search_docker_image | string split " ")
+set actual (_fzf_search_docker_image | string split " ")
 set failed 0
 for i in (seq 1 3)
     string match --quiet -- $expected[$i] $actual[$i]; or set failed 1

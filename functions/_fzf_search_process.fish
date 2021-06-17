@@ -1,6 +1,6 @@
-function __fzf_search_process --description "Search the current processes and insert the process ID into the commandline at the cursor."
+function _fzf_search_process --description "Search the current processes and insert the process ID into the commandline at the cursor."
     # Make sure that fzf uses fish to execute git show.
-    # See similar comment in __fzf_search_shell_variables.fish.
+    # See similar comment in _fzf_search_variables.fish.
     set --local --export SHELL (command --search fish)
 
     # Extract processes whose effective user ID matches the current

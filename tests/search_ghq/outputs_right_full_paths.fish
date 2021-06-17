@@ -12,7 +12,7 @@ mock ghq list "echo $path1; echo $path2"
 mock ghq \* "return 0"
 
 set --export --append FZF_DEFAULT_OPTS "--filter='repo'"
-set actual (__fzf_search_ghq | string split " ")
+set actual (_fzf_search_ghq | string split " ")
 
 string match --regex --quiet "^$path1\$" "$actual[1]"; and string match --regex --quiet "^$path2\$" "$actual[2]"
 

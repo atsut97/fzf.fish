@@ -8,5 +8,5 @@ echo 'user     12955  6832  0 19:01 pts/2    00:00:00 ps -f -u 1000';
 "
 set --export --append FZF_DEFAULT_OPTS "--filter='atsuta'"
 set expected 712
-set actual (__fzf_search_process)
+set actual (_fzf_search_process)
 @test "matches tokens in the 1st field" "$actual" = "$expected"

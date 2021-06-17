@@ -1,14 +1,14 @@
-function __fzf_search_docker_image --description "Search the docker top-level images under management. Insert the selected image repository and tag into the commandline at the cursor."
+function _fzf_search_docker_image --description "Search the docker top-level images under management. Insert the selected image repository and tag into the commandline at the cursor."
     if not type -q docker
-        echo '__fzf_search_docker_image: Unable to find docker(1) on the system' >&2
+        echo '_fzf_search_docker_image: Unable to find docker(1) on the system' >&2
         return 1
     else if not docker stats --no-stream >/dev/null 2>&1
-        echo '__fzf_search_docker_image: Cannot connect to the Docker daemon' >&2
+        echo '_fzf_search_docker_image: Cannot connect to the Docker daemon' >&2
         return 1
     end
 
-    # Make sure that fzf uses fish to execute __fzf_preview_file.
-    # See similar comment in __fzf_search_shell_variables.fish.
+    # Make sure that fzf uses fish to execute _fzf_preview_file.
+    # See similar comment in _fzf_search_variables.fish.
     set --local --export SHELL (command --search fish)
 
     # Narrow fields to search down to Repository, Tag and Image ID by

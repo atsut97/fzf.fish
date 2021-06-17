@@ -1,14 +1,14 @@
-function __fzf_search_git_branch --description "Search the git branch of the current git repository. Insert the selected branch name into the commandline at the cursor."
+function _fzf_search_git_branch --description "Search the git branch of the current git repository. Insert the selected branch name into the commandline at the cursor."
     if not git rev-parse --git-dir >/dev/null 2>&1
-        echo '__fzf_search_git_branch: Not in a git repository.' >&2
+        echo '_fzf_search_git_branch: Not in a git repository.' >&2
         return 1
     end
 
     # Make sure that fzf uses fish to execute git show.
-    # See similar comment in __fzf_search_shell_variables.fish.
+    # See similar comment in _fzf_search_variables.fish.
     set --local --export SHELL (command --search fish)
 
-    set --local preview_cmd '__fzf_preview_git_repository (pwd) log (string split --max 1 " " (string sub --start 3 {}))[1]'
+    set --local preview_cmd '_fzf_preview_git_repository (pwd) log (string split --max 1 " " (string sub --start 3 {}))[1]'
     set selected_branch_line (
         git branch --all --color=always | \
         fzf --ansi \

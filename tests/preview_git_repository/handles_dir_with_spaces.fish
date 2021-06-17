@@ -9,7 +9,7 @@ mock bat "--style=numbers --color=always" "cat \$argv"
 
 set contents "# Spaced Repository"
 echo "$contents" >"$repo/README.md"
-set actual (__fzf_preview_git_repository "$repo")
+set actual (_fzf_preview_git_repository "$repo")
 
 @test "correctly handles directory paths with spaces" "$actual" = "$contents"
 

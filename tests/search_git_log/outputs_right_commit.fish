@@ -5,7 +5,7 @@ if git cat-file -e c6326dbda6b1f48ecbd015838073213be3bf6ec1 2>/dev/null # sha is
     # This test is running locally.
     set --export --append FZF_DEFAULT_OPTS "--filter='Refactor: one folder per test suite, one file per test case'"
     set expected b34c6befce3735f92a1d8d1d3bb064c4ee03a685
-    set actual (__fzf_search_git_log)
+    set actual (_fzf_search_git_log)
     @test "outputs right commit (local)" "$actual" = "$expected"
 else
     # This test is running on CI. Since we don't want to have CI download the entire git log just

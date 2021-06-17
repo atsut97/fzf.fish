@@ -13,6 +13,6 @@ mock docker \* "return 0"
 set fzf_docker_use_full_id 1
 set --export --append FZF_DEFAULT_OPTS "--filter='focal'"
 set expected d203ae5c68ecad0e2c5bb90e27ea8535fcaa29f3c4340c3063bca15f686c3ede
-set actual (__fzf_search_docker_container)
+set actual (_fzf_search_docker_container)
 
 @test "outputs full docker container ID" $actual = $expected
