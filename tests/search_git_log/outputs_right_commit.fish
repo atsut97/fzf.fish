@@ -12,6 +12,6 @@ else
     # for a few tests, we will just test if it is able to output the sha of the only commit available
     # by forcing fzf to select only commit available and checking if the ouputted sha exists
     set --export --append FZF_DEFAULT_OPTS --select-1
-    git cat-file -e (__fzf_search_git_log) 2>/dev/null
+    git cat-file -e (_fzf_search_git_log) 2>/dev/null
     @test "outputs a valid git sha (CI)" $status -eq 0
 end
